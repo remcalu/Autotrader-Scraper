@@ -1,5 +1,5 @@
 {
-  "car_typesd" : ["toyota/corolla"],
+  "car_types_unused" : ["toyota/corolla"],
   "car_types" : ["toyota/corolla", "toyota/camry", "toyota/avalon", "toyota/matrix", "honda/civic", "honda/accord", "honda/insight", "hyundai/elantra", "hyundai/accent", "hyundai/sonata", "kia/forte", "kia/rio", "kia/k5", "mazda/mazda3", "mazda/mazda6", "nissan/altima", "nissan/maxima", "nissan/sentra", "nissan/versa", "ford/fusion", "ford/focus", "ford/fiesta", "chevrolet/malibu", "chevrolet/spark", "volkswagen/passat", "volkswagen/jetta", "subaru/legacy", "subaru/impreza", "mitsubishi/mirage%20g4", "mitsubishi/mirage"],
   "distance" : "500",
   "max_mileage" : "100000",
