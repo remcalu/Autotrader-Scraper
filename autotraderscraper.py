@@ -1,5 +1,6 @@
 # Generate EXE with pyinstaller --onefile webscraper.py --hidden-import jinja2 --add-data C:\Users\RemCa\AppData\Local\Programs\Python\Python38-32\Lib\site-packages\pandas\io\formats\templates\html.tpl;pandas\io\formats\templates
 import os
+import os.path
 import time
 import json
 import math
@@ -157,7 +158,11 @@ try:
             })
 
     # Checking if the old data file is empty or not
-    scraped_file_size = os.path.getsize("saved/scraped.json")
+    if os.path.isfile("saved\scraped.json") == False:
+        fileCreate = open(current_dir + "\saved\scraped.json", "w+")
+
+    # Getting size of scraped.json file
+    scraped_file_size = os.path.getsize("saved\scraped.json")
     if scraped_file_size == 0:
         # Creating a JSON object if the JSON file is empty
         data_json_read = {}
