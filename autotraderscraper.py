@@ -41,7 +41,7 @@ def roundup(x):
 
 # Print a car object from json
 def print_json_car(car):
-    return("[%s]   %-6s %-8s $%-7s %-12s %-13s %-6s %s\n" % (car["date"], car["year"], car["mileage"], car["price"], car["brand"], car["name"], car["dealer"], car["link"])) 
+    return("[%s]   %-6s %-8s $%-7s %-12s %-13s %-6s %-20s %s\n" % (car["date"], car["year"], car["mileage"], car["price"], car["brand"], car["name"], car["dealer"], car["market_value"], car["link"])) 
     
 try:
     # Setting up window and colors
@@ -107,25 +107,39 @@ try:
             car_various_data = ad.find_element_by_class_name('result-title')
             
             # Dealing with price
-            car_price = str(ad.find_element_by_class_name('price-amount').text).replace(',','').replace('$','')
+            car_price = ad.find_element_by_class_name('price-amount').text.replace(',','').replace('$','')
+
+            # Dealing with above or below market value data
+            if check_exists_by_class_name(ad, "price-delta-text") == True:
+                car_market_value = ad.find_element_by_class_name('price-delta-text').text
+                car_market_value_cost = car_market_value.split()[0]
+                car_market_value_direction = car_market_value.split()[1]
+                if(car_market_value_direction == "BELOW"):
+                    car_market_value_direction = "B"
+                else:
+                    car_market_value_cost = ""
+                    car_market_value_direction = ""
+                car_market_value = "%s %-6s" % (car_market_value_direction, car_market_value_cost)
+            else:
+                car_market_value = ""
 
             # Dealing with dealer
             if check_exists_by_class_name(ad, "private-car-en") == True or check_exists_by_class_name(ad, "svg_privateBadge") == True:
                 car_dealer = "PRIV"
             else:
                 car_dealer = "DEAL"
-                
+            
             # Dealing with mileage
-            car_mileage = str(ad.find_element_by_class_name('kms').text.split(' ')[1]).replace(',','')
+            car_mileage = ad.find_element_by_class_name('kms').text.split(' ')[1].replace(',','')
 
             # Dealing with brand
-            car_brand = str(car_various_data.text).split(' ')[1].lower().capitalize()
+            car_brand = car_various_data.text.split(' ')[1].lower().capitalize()
 
             # Dealing with name
-            car_name = str(car_various_data.text).split(' ')[2].lower().capitalize()
+            car_name = car_various_data.text.split(' ')[2].lower().capitalize()
 
             # Dealing with year
-            car_year = str(car_various_data.text).split(' ')[0]
+            car_year = car_various_data.text.split(' ')[0]
 
             # Dealing with link
             car_link = str(car_various_data.get_attribute('href'))
@@ -133,6 +147,7 @@ try:
             data_json['ads'].append({
                 'date': curr_date_time_file,
                 'price': car_price,
+                'market_value': car_market_value,
                 'dealer': car_dealer,
                 'mileage': car_mileage,
                 'brand': car_brand,
@@ -141,9 +156,16 @@ try:
                 'link': car_link,
             })
 
-    # Reading the old data file and getting the info
-    with open(current_dir + "\saved\scraped.json") as file:
-        data_json_read = json.load(file)
+    # Checking if the old data file is empty or not
+    scraped_file_size = os.path.getsize("saved/scraped.json")
+    if scraped_file_size == 0:
+        # Creating a JSON object if the JSON file is empty
+        data_json_read = {}
+        data_json_read["ads"] = []
+    else:
+        # Reading the old data file and getting the info if the JSOn file is not empty
+        with open(current_dir + "\saved\scraped.json") as file:
+            data_json_read = json.load(file)
 
     # Looping through all cars that were just found
     data_json_out = {}
@@ -171,7 +193,6 @@ try:
         for car_compare in data_json_out["ads"]:
             if car["price"] == car_compare["price"] and car["mileage"] == car_compare["mileage"] and car["brand"] == car_compare["brand"] and car["name"] == car_compare["name"] and car["year"] == car_compare["year"]:
                 data_json_out["ads"].remove(car_compare)
-                num_new_cars -= 1
 
     # Printing the data to the summary file
     printed_endl_condition = 1000
@@ -194,7 +215,7 @@ try:
         file_text.write(print_json_car(car))
     file_text.write("\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n")
 
-    # Saving new json file
+    # Saving new JSON file
     with open("saved\scraped.json", "w") as file_out_json:
         json.dump(data_json_out, file_out_json, sort_keys=True, indent=4)
 
