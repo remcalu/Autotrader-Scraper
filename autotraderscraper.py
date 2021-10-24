@@ -55,6 +55,7 @@ try:
         data = json.load(file)
     CAR_TYPES = data["car_types"]
     DISTANCE = data["distance"]
+    POSTAL_CODE = data["postal_code"]
     MAX_MILEAGE = data["max_mileage"]
     MAX_PRICE = data["max_price"]
     MIN_YEAR = data["min_year"]
@@ -78,9 +79,9 @@ try:
     data_json["ads"] = []
     for car_type in CAR_TYPES:
         if PRIVATE_DEALER == "True":
-            web_link = "https://www.autotrader.ca/cars/" + car_type + "/on/kitchener/?rcp=1000&rcs=0&srt=4&yRng=" + MIN_YEAR + "%2C&pRng=%2C" + MAX_PRICE + "&oRng=%2C" + MAX_MILEAGE + "&prx=" + DISTANCE + "&prv=Ontario&loc=N2E1P6&hprc=True&wcp=True&sts=New-Used&inMarket=advancedSearch"
+            web_link = "https://www.autotrader.ca/cars/" + car_type + "/?rcp=1000&rcs=0&srt=4&yRng=" + MIN_YEAR + "%2C&pRng=%2C" + MAX_PRICE + "&oRng=%2C" + MAX_MILEAGE + "&prx=" + DISTANCE + "&loc=" + POSTAL_CODE + "&hprc=True&wcp=True&sts=New-Used&inMarket=advancedSearch"
         else:
-            web_link = "https://www.autotrader.ca/cars/" + car_type + "/on/kitchener/?rcp=1000&rcs=0&srt=4&yRng=" + MIN_YEAR + "%2C&pRng=%2C" + MAX_PRICE + "&oRng=%2C" + MAX_MILEAGE + "&prx=" + DISTANCE + "&prv=Ontario&loc=N2E1P6&hprc=True&wcp=True&sts=New-Used&adtype=Dealer&inMarket=advancedSearch"
+            web_link = "https://www.autotrader.ca/cars/" + car_type + "/?rcp=1000&rcs=0&srt=4&yRng=" + MIN_YEAR + "%2C&pRng=%2C" + MAX_PRICE + "&oRng=%2C" + MAX_MILEAGE + "&prx=" + DISTANCE + "&loc=" + POSTAL_CODE + "&hprc=True&wcp=True&sts=New-Used&adtype=Dealer&inMarket=advancedSearch"
 
         print("\nLoading webpage for " + car_type + ": " + web_link)
         while True:
