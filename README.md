@@ -4,7 +4,7 @@
 Remus Calugarescu
 
 ## Last Major Modification
-October 23, 2021
+March 08, 2022
 
 ## Purpose
 This is a webscraper that searched autotrader.ca for cars of your choice. You can check options.json to change various settings for searching, currently the following settings exist.
