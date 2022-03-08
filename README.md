@@ -31,12 +31,12 @@ loop_amount:        The amount of times to check for new deals before exiting th
 ## For emails sending, add a .json file in the options folder, EX:
 ~~~~
 {
-   "email_username" : "pythonautosend@gmail.com",
-   "email_password" : "Justlemmemakeit69420!",
+   "email_username" : "email@gmail.com",
+   "email_password" : "Password",
    "email_receivers" : ["example1@outlook.com", "example2@outlook.com"]
 }
 ~~~~
-Note that email_receivers is an array, you can add as many emails to it as you'd like
+Note that email_receivers is an array, you can add as many emails to it as you'd like. Also be aware that
 
 ## The file with the best deals is in saved/scrapedbest.txt
 The default threshhold for what is considered a good deal is for the cost to be at least 10% below market price
