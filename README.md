@@ -22,7 +22,21 @@ max_price:          The maximum price a car can have in CAD$
 min_year:           The minimum year that a car needs to be
 
 private_dealer:     The option of accepting cars with private dealers, can either be "True" or "False"
+
+below_threshold:    The minimum % cheaper than market value for finding good deals in scrapedbest.txt
+
+loop_amount:        The amount of times to check for new deals before exiting the program
 ~~~~
+
+## For emails sending, add a .json file in the options folder, EX:
+~~~~
+{
+   "email_username" : "fakeemail@gmail.com",
+   "email_password" : "fakepassword"
+}
+~~~~
+
+## The file with the best deals is in saved/scrapedbest.txt
 
 ## The file with results located in saved/scraped.txt
 ![Scraped](https://i.imgur.com/XLGqe1U.jpeg)
